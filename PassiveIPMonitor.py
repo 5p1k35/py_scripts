@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from scapy.all import *
+import sys
 import time
 import os
 
@@ -67,15 +68,19 @@ def hardwork(pkt):
 					ipv6[pkt[IPv6].src][2][0] = str(pkt[Ether].src)
 		else:
 			ipv6[pkt[IPv6].src] = [1,int(time.time()),[str(pkt[Ether].src)],""]
-	print_data()
+	if len(sys.argv) == 1:
+		print_data()
 	
 	
 def main():
-	
-	
-	sniff(prn=hardwork,store=0)
-	
-	return 0
+	print len(sys.argv)
+	if len(sys.argv) > 1:
+		print "Going to use",sys.argv[1]
+		sniff(offline=sys.argv[1],prn=hardwork,store=0)
+		print_data()
+	else:
+		print "Sniffing the wire"
+		sniff(prn=hardwork,store=0)
 
 if __name__ == '__main__':
 	main()
