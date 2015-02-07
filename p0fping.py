@@ -105,7 +105,7 @@ def send_packet(label,value,ports,target):
 			options.append(('Timestamp',(ts[0],ts[1])))
 		elif option == "sok":
 			options.append(('SAckOK', ''))
-		elif option.contains("eol"):
+		elif "eol" in option:
 			options.append(('EOL',''))
 			if len(option.split("+")) >= 2:
 				padding = " "*int(option.split("+")[1])
